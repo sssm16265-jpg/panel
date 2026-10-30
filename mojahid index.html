@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d16">
+<title>MUJAHID PANEL</title>
+<style>
+:root{--bg:#090d16;--panel:#141c2b;--gold:#f6c453;--muted:#8492a8;--stroke:#29364b}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,#26344b 0,#0b111d 48%,#080b12 100%);color:#f6f8fc;font-family:Arial,Helvetica,sans-serif}
+main{width:min(100%,480px);margin:auto;padding:22px 17px 24px}
+header{text-align:center;padding:18px 8px 24px}
+.brand{font-size:29px;font-weight:900;letter-spacing:2px;color:var(--gold);text-shadow:0 3px 22px #f6c45335}
+.line{height:2px;width:76px;background:var(--gold);margin:13px auto 0;border-radius:5px}
+.panel{background:linear-gradient(155deg,#1a2639,#111927);border:1px solid #34445d;border-radius:22px;padding:16px;box-shadow:0 18px 45px #0007}
+.buttons{display:grid;gap:12px}
+button{width:100%;min-height:62px;border:1px solid #394a63;border-radius:15px;background:linear-gradient(110deg,#202d42,#182235);color:#fff;font-size:17px;font-weight:800;letter-spacing:1px;cursor:pointer;transition:.15s}
+button:active{transform:scale(.985)}
+button.active{border-color:var(--gold);background:linear-gradient(110deg,#554522,#2c2a25);color:#ffdc83;box-shadow:0 0 0 1px #f6c45340,0 7px 20px #0004}
+.device{margin:17px auto 0;text-align:center;color:var(--muted);font-size:10px;letter-spacing:1.5px}
+.device strong{display:block;color:#cbd5e1;font-size:11px;letter-spacing:1px;margin-top:5px;font-weight:600}
+.footer{text-align:center;color:#536176;font-size:9px;letter-spacing:2px;margin-top:19px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#26364d;border:1px solid #61718a;color:#fff;padding:10px 15px;border-radius:12px;font-size:12px;display:none;white-space:nowrap}
+</style>
+</head>
+<body>
+<main>
+<header><div class="brand">MUJAHID PANEL</div><div class="line"></div></header>
+<section class="panel">
+ <div class="buttons">
+  <button class="active" type="button">100% HEADSHOT</button>
+  <button type="button">50% HEADSHOT</button>
+  <button type="button">LOCATION</button>
+  <button type="button">BODY HEADSHOT</button>
+ </div>
+</section>
+<div class="device">DEVICE DETECTED<strong id="deviceName">DETECTING DEVICE...</strong></div>
+<div class="footer">MUJAHID PANEL • FREE FIRE MAX</div>
+</main>
+<div id="toast"></div>
+<script>
+const buttons=[...document.querySelectorAll('.buttons button')];
+const toast=document.getElementById('toast');
+buttons.forEach(button=>button.addEventListener('click',()=>{
+ buttons.forEach(b=>b.classList.remove('active'));
+ button.classList.add('active');
+ toast.textContent=button.textContent+' SELECTED';
+ toast.style.display='block';
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>toast.style.display='none',1600);
+}));
+function detectDevice(){
+ const ua=navigator.userAgent||'';
+ let model='';
+ const android=ua.match(/Android[^;]*;\s*([^;)]+?)(?:\s+Build\/[^)]*)?\)/i);
+ const iphone=/iPhone/i.test(ua), ipad=/iPad/i.test(ua);
+ if(android && android[1]){
+   model=android[1].replace(/^\s*有/,'').trim();
+   if(/^(?:K|[0-9.]+)$/i.test(model) || model.length<3) model='Android Device';
+ } else if(iphone) model='Apple iPhone';
+ else if(ipad) model='Apple iPad';
+ else if(/Windows/i.test(ua)) model='Windows Device';
+ else if(/Macintosh/i.test(ua)) model='Mac Device';
+ else model='Mobile / Unknown Device';
+ document.getElementById('deviceName').textContent=model.toUpperCase();
+}
+detectDevice();
+</script>
+</body>
+</html>
