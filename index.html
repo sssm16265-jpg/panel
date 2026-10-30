@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050b16">
+<title>MOJAHID PANEL</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#12345f,#050b16 58%);color:#edf8ff;font-family:Arial,system-ui,sans-serif}
+header{text-align:center;padding:24px 14px 16px;border-bottom:1px solid #087fff}
+h1{margin:0;color:#39c5ff;letter-spacing:2px;font-size:28px;text-shadow:0 0 18px #078fff}
+header p{margin:7px 0;color:#b5d9f6;font-size:12px;letter-spacing:1px}
+.chip{display:inline-block;border:1px solid #138bff;border-radius:30px;padding:7px 13px;font-size:12px}
+main{max-width:620px;margin:auto;padding:14px}
+.card{background:linear-gradient(145deg,#102744,#081326);border:1px solid #087fff99;border-radius:17px;padding:16px;margin-bottom:13px;box-shadow:0 8px 25px #0006}
+h2{font-size:18px;color:#4ccaff;margin:0 0 10px}
+p{line-height:1.5;color:#d7eaff;font-size:14px}
+.tabs{display:flex;gap:7px;overflow:auto;padding:10px 12px;position:sticky;top:0;background:#050b16ed;z-index:5}
+button{border:1px solid #168fff;background:#0a2342;color:#fff;padding:11px 13px;border-radius:12px;font-weight:bold}
+button.active,.primary{background:linear-gradient(110deg,#075bd9,#079fff)}
+.page{display:none}.page.active{display:block}
+.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.preset{padding:15px 5px;text-align:center;font-size:20px}
+.preset small{display:block;font-size:11px;font-weight:normal;margin-top:5px}
+.preset.selected{background:linear-gradient(145deg,#075bd9,#078fff);box-shadow:0 0 16px #078fff88}
+.rangeLabel{display:flex;justify-content:space-between;margin:15px 0 4px;font-size:14px}
+output{color:#4ccaff;font-weight:bold}input[type=range]{width:100%;accent-color:#159cff}
+.action{width:100%;margin-top:12px}
+.item{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #173958;font-size:14px}
+.item input{accent-color:#078fff;transform:scale(1.2)}
+.muted{font-size:12px;color:#9bbbd8}
+.status{margin-top:10px;color:#6de0ff;font-size:13px;min-height:18px}
+footer{text-align:center;color:#83aaca;font-size:11px;padding:18px}
+</style>
+</head>
+<body>
+<header><h1>MOJAHID PANEL</h1><p>FREE FIRE MAX COMPANION · BLACK + BLUE</p><span class="chip">OPPO A78 · 8GB RAM</span></header>
+<div class="tabs">
+<button class="active" data-tab="head">Headshot %</button><button data-tab="sens">Sensitivity</button><button data-tab="practice">Training</button><button data-tab="device">Device</button>
+</div>
+<main>
+<section class="page active" id="head">
+<div class="card">
+<h2>OPEN FREE FIRE MAX</h2>
+<p>গেমটি ফোনে ইনস্টল করা থাকলে নিচের বাটনে চাপ দিয়ে খোলার চেষ্টা করুন।</p>
+<button class="primary action" id="openGame">▶ OPEN GAME</button>
+<div class="status" id="gameStatus"></div>
+<p class="muted">গেম ইনস্টল না থাকলে বা Android অনুমতি না দিলে এটি খুলবে না।</p>
+</div>
+<div class="card"><h2>Headshot Preset</h2><p>আপনার পছন্দের শতাংশ নির্বাচন করুন। এগুলো শুধু প্যানেলের প্রিসেট/ট্রেনিং লক্ষ্য—গেমে অটো হেডশট বা Aim পরিবর্তন করে না।</p>
+<div class="presets">
+<button class="preset" data-value="80">80%<small>Balanced</small></button>
+<button class="preset selected" data-value="90">90%<small>Advanced</small></button>
+<button class="preset" data-value="100">100%<small>Max target</small></button>
+</div>
+<div class="rangeLabel"><span>Custom Headshot Target</span><output id="headVal">90%</output></div>
+<input id="headRange" type="range" min="0" max="100" value="90">
+<button class="primary action" id="saveHead">Save Headshot Preset</button><div class="status" id="headStatus"></div></div>
+<div class="card"><h2>Quick Profile</h2><p id="profileText">Selected profile: 90% · Advanced</p><p class="muted">শতাংশটি আপনার অনুশীলনের লক্ষ্য হিসেবে ব্যবহার করুন, বাস্তব হেডশটের নিশ্চয়তা নয়।</p></div>
+</section>
+<section class="page" id="sens">
+<div class="card"><h2>Sensitivity Settings</h2><p>এগুলো প্রস্তাবিত গাইড মান। Free Fire MAX-এর নিজস্ব সেটিংসে ম্যানুয়ালি মিলিয়ে নিন।</p>
+<div id="sliders"></div><button class="primary action" id="saveSens">Save Sensitivity Values</button><div class="status" id="sensStatus"></div></div>
+</section>
+<section class="page" id="practice">
+<div class="card"><h2>Headshot Training Checklist</h2><p>প্রতিদিন ১০–১৫ মিনিট অনুশীলনের জন্য:</p>
+<div class="item"><input type="checkbox">Training Ground-এ warm-up</div>
+<div class="item"><input type="checkbox">Crosshair head level-এ রাখা</div>
+<div class="item"><input type="checkbox">Short drag movement অনুশীলন</div>
+<div class="item"><input type="checkbox">Close-range tracking অনুশীলন</div>
+<div class="item"><input type="checkbox">Controlled burst practice</div>
+<div class="item"><input type="checkbox">নিজের HUD আরামদায়ক কি না পরীক্ষা</div></div>
+</section>
+<section class="page" id="device">
+<div class="card"><h2>OPPO A78 · Performance Tips</h2>
+<div class="item"><input type="checkbox">অপ্রয়োজনীয় background apps বন্ধ</div>
+<div class="item"><input type="checkbox">কমপক্ষে ১০–১৫% storage খালি রাখা</div>
+<div class="item"><input type="checkbox">Do Not Disturb চালু করা</div>
+<div class="item"><input type="checkbox">ফোন অতিরিক্ত গরম হলে বিরতি নেওয়া</div>
+<div class="item"><input type="checkbox">স্থিতিশীল নেটওয়ার্ক ব্যবহার</div>
+<p class="muted">এই সফটওয়্যারটি অফলাইনে চলে। এটি Free Fire MAX-এ যুক্ত হয় না বা গেমের ফাইল পরিবর্তন করে না।</p></div>
+</section>
+</main>
+<footer>MOJAHID PANEL · OFFLINE COMPANION SOFTWARE · v1.1</footer>
+<script>
+const tabs=[...document.querySelectorAll('[data-tab]')],pages=[...document.querySelectorAll('.page')];
+tabs.forEach(b=>b.onclick=()=>{tabs.forEach(x=>x.classList.toggle('active',x===b));pages.forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab))});
+const range=document.getElementById('headRange'),val=document.getElementById('headVal'),presets=[...document.querySelectorAll('[data-value]')];
+function updateHead(v){range.value=v;val.textContent=v+'%';presets.forEach(b=>b.classList.toggle('selected',b.dataset.value===String(v)));let name=v==80?'Balanced':v==90?'Advanced':v==100?'Max target':'Custom';document.getElementById('profileText').textContent='Selected profile: '+v+'% · '+name;}
+presets.forEach(b=>b.onclick=()=>updateHead(+b.dataset.value));range.oninput=()=>updateHead(+range.value);
+document.getElementById('saveHead').onclick=()=>{localStorage.setItem('mojahid_headshot',range.value);document.getElementById('headStatus').textContent='Saved on this device: '+range.value+'%';};
+const settings=[['General',95],['Red Dot',90],['2x Scope',80],['4x Scope',70],['Sniper Scope',50],['Free Look',75]];
+document.getElementById('sliders').innerHTML=settings.map(([n,v],i)=>`<div class="rangeLabel"><span>${n}</span><output id="sval${i}">${v}</output></div><input type="range" min="0" max="200" value="${v}" id="s${i}">`).join('');
+settings.forEach((x,i)=>document.getElementById('s'+i).oninput=e=>document.getElementById('sval'+i).textContent=e.target.value);
+document.getElementById('saveSens').onclick=()=>{let vals=settings.map((x,i)=>document.getElementById('s'+i).value);localStorage.setItem('mojahid_sens',JSON.stringify(vals));document.getElementById('sensStatus').textContent='Sensitivity values saved on this device.'};
+document.getElementById('openGame').onclick=()=>{
+  document.getElementById('gameStatus').textContent='Free Fire MAX খোলার চেষ্টা করা হচ্ছে…';
+  // Android intent targets the official Free Fire MAX launcher package.
+  window.location.href='intent://launch/#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.dts.freefiremax;end';
+  setTimeout(()=>{document.getElementById('gameStatus').textContent='গেম না খুললে নিশ্চিত করুন Free Fire MAX ইনস্টল আছে।';},1800);
+};
+const saved=localStorage.getItem('mojahid_headshot');if(saved!==null)updateHead(+saved);
+</script>
+</body></html>
